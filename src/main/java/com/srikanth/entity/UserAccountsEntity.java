@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
 
 @Entity
@@ -32,6 +35,7 @@ public class UserAccountsEntity {
 	@Column(length = 10, name = "COUNTRY_ID")
 	private Integer countryId;
 
+	@CreationTimestamp
 	@Column(length = 10, name = "CREATED_DATE")
 	private Date createdDate;
 
@@ -47,6 +51,7 @@ public class UserAccountsEntity {
 	@Column(length = 10, name = "STATE_ID")
 	private Integer stateId;
 
+	@UpdateTimestamp
 	@Column(length = 10, name = "UPDATED_DATE")
 	private Date updatedDate;
 
