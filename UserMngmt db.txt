@@ -1,0 +1,54 @@
+->show databases;
+
+->create database usermngmt;
+
+->use usermngmt;
+
+->select database();//to confirm
+
+->CREATE TABLE `COUNTRY_MASTER` (  `COUNTRY_ID` int(10) NOT NULL PRIMARY KEY,  `COUNTRY_CODE` varchar(255),  `COUNTRY_NAME` varchar(255));
+
+->desc COUNTRY_MASTER
+
+->CREATE TABLE `STATES_MASTER` (  `STATE_ID` int(10) NOT NULL PRIMARY KEY,  `STATE_NAME` varchar(255),  `COUNTRY_ID` int(10));
+
+->desc STATES_MASTER
+
+->CREATE TABLE `CITIES_MASTER` (  `CITY_ID` int(10) NOT NULL PRIMARY KEY,  `CITY_NAME` varchar(255),  `STATE_ID` int(10));
+
+->desc CITIES_MASTER
+
+->show tables;
+
+->INSERT INTO 
+	COUNTRY_MASTER(COUNTRY_ID, COUNTRY_CODE, COUNTRY_NAME) 
+VALUES 
+	(1,'+91', 'India'),
+	(2,'+61', 'Australia'),
+	(3,'+1', 'USA');
+
+->SELECT * FROM COUNTRY_MASTER;
+
+->INSERT INTO 
+	STATES_MASTER(STATE_ID, STATE_NAME, COUNTRY_ID) 
+VALUES 
+	(1, 'Andhra Pradesh', 1),
+	(2, 'Telangana', 1),
+	(3, 'Victoria', 2),
+	(4, 'Tasmania', 2);
+
+->SELECT * FROM STATES_MASTER;
+
+->INSERT INTO 
+	CITIES_MASTER(CITY_ID, CITY_NAME, STATE_ID) 
+VALUES 
+	(1, 'Tirupati', 1),
+	(2, 'Vizag', 1),
+	(3, 'Hyderabad', 2),
+	(4, 'Karimnagar', 2),
+	(5, 'Melnourne', 3),
+	(6, 'Geelong', 3),
+	(7, 'Hobat', 4),
+	(8, 'Launceston', 4);
+
+->SELECT * FROM CITIES_MASTER;
