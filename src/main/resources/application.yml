@@ -1,0 +1,30 @@
+server:
+  port: 9090
+spring:
+  datasource:
+    username: sa
+    password: null
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: <enter-email>
+    password: <enter-pwd>
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
