@@ -8,4 +8,5 @@ public class UnlockAccount {
 	private String tempPwd;
 	private String newPwd;
 	private String confirmNewPwd;
+	private String email;
 }

@@ -1,26 +1,18 @@
-INSERT INTO 
-	COUNTRY_MASTER(COUNTRY_ID, COUNTRY_CODE, COUNTRY_NAME) 
-VALUES 
-	(1,'+91', 'India'),
-	(2,'+61', 'Australia'),
-	(3,'+1', 'USA');
-
-INSERT INTO 
-	STATES_MASTER(STATE_ID, STATE_NAME, COUNTRY_ID) 
-VALUES 
-	(1, 'Andhra Pradesh', 1),
-	(2, 'Telangana', 1),
-	(3, 'Victoria', 2),
-	(4, 'Tasmania', 2);
-	
-INSERT INTO 
-	CITIES_MASTER(CITY_ID, CITY_NAME, STATE_ID) 
-VALUES 
-	(1, 'Tirupati', 1),
-	(2, 'Vizag', 1),
-	(3, 'Hyderabad', 2),
-	(4, 'Karimnagar', 2),
-	(5, 'Melnourne', 3),
-	(6, 'Geelong', 3),
-	(7, 'Hobat', 4),
-	(8, 'Launceston', 4);
+Insert Into COUNTRY_MASTER Values(1,'+91','India');
+Insert Into COUNTRY_MASTER Values(2,'+61','Australia');
+Insert Into STATES_MASTER Values(1,1,'Andhra Pradesh');
+Insert Into STATES_MASTER Values(2,1,'Telangana');
+Insert Into STATES_MASTER Values(3,2,'Victoria');
+Insert Into STATES_MASTER Values(4,2,'WA');
+insert into STATES_MASTER values(5,2,'NSW');
+Insert Into CITIES_MASTER Values(1,'Vizag',1);
+Insert Into CITIES_MASTER Values(2,'Guntur',1);
+Insert Into CITIES_MASTER Values(3,'Hyderabad',2);
+Insert Into CITIES_MASTER Values(4,'Adilabad',2);
+Insert Into CITIES_MASTER Values(11,'Karimnagar',2);
+Insert Into CITIES_MASTER Values(5,'Melbourne',3);
+Insert Into CITIES_MASTER Values(6,'Geelong',3);
+Insert Into CITIES_MASTER Values(7,'Sydney',5);
+Insert Into CITIES_MASTER Values(8,'Mennienge',5);
+Insert Into CITIES_MASTER Values(9,'Adelide',4);
+Insert Into CITIES_MASTER Values(10,'Perth',4);

@@ -2,20 +2,25 @@ package com.srikanth.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.srikanth.service.UserService;
+
 @Controller
 public class LoginController {
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * This method is used to load login page
 	 * 
 	 * @return String
 	 */
-	@GetMapping("/")
+	@GetMapping(value = { "/", "index" })
 	public String index() {
 		return "index";
 	}
@@ -30,7 +35,15 @@ public class LoginController {
 	@PostMapping("/signin")
 	public String handleSignInBtn(HttpServletRequest req, Model model) {
 		String viewName = "";
-		// TODO: We should write logic here
+		String email = req.getParameter("email");
+		String password = req.getParameter("pwd");
+		String loginCheck = userService.loginCheck(email, password);
+		if (loginCheck.equals("VALID")) {
+			viewName = "dashboard";
+		} else {
+			viewName = "index";
+			model.addAttribute("failMsg", loginCheck);
+		}
 		return viewName;
 	}
 

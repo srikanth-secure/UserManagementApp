@@ -3,14 +3,15 @@ package com.srikanth.repo;
 import java.io.Serializable;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
-import com.srikanth.entity.UserAccountsEntity;
+import com.srikanth.entity.UserAccountEntity;
 
-public interface UserAccountsRepository extends JpaRepository<UserAccountsEntity, Serializable> {
-	
-	@Query(value = "select customer_id from cus where")
-	public Boolean checkEmail(String userEmail);
+public interface UserAccountsRepository extends JpaRepository<UserAccountEntity, Serializable> {
 
-	public UserAccountsEntity findByUserPazzwordAndUserEmail();
+	// select * from USER_ACCOUNT where USER_EMAIL=?
+	public UserAccountEntity findByUserEmail(String email);
+
+	// select * from USER_ACCOUNT where USER_EMAIL=? and USER_PWD=?
+	public UserAccountEntity findByUserEmailAndUserPwd(String email, String TempPwd);
+
 }

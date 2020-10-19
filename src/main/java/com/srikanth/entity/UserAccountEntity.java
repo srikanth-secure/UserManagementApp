@@ -17,8 +17,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "USER_ACCOUNTS")
-public class UserAccountsEntity {
+@Table(name = "USER_ACCOUNT")
+public class UserAccountEntity {
 
 	@Id
 	@SequenceGenerator(sequenceName = "USER_ID_SEQ", name = "U_ID_SEQ", allocationSize = 1)
