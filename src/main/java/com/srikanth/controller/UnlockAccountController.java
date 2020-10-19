@@ -52,5 +52,4 @@ public class UnlockAccountController {
 		}
 		return "unlockAcc";
 	}
-
 }

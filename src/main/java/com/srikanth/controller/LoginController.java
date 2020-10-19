@@ -46,5 +46,4 @@ public class LoginController {
 		}
 		return viewName;
 	}
-
 }

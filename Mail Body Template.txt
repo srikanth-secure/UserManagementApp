@@ -9,7 +9,6 @@ Temporary Password : {TEMP-PWD}<br/>
 <br/>
 
 <a href='http://localhost:9090/unlockAcc?email={EMAIL}'>
-
 Click Here To Unlock Your Account</a> <br/>
 <br/>
 
