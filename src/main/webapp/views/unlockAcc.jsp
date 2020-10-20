@@ -42,6 +42,8 @@
 
 				<tr>
 					<td><input type="reset" value="Reset" /></td>
+					</tr>
+					<tr>
 					<td><input type="submit" value="Submit" id="unlock Account" /></td>
 				</tr>
 			</table>

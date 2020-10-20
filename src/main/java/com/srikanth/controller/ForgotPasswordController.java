@@ -36,7 +36,9 @@ public class ForgotPasswordController {
 	@PostMapping("/forgotPwd")
 	public String handleForgotPwdSubmtBtn(HttpServletRequest req, Model model) {
 		String email = req.getParameter("email");
-		if (email.equals("SUCCESS")) {
+		String status = userService.recoverPassword(email);
+		// System.out.pri ntln(email);
+		if (status.equals("SUCCESS")) {
 			model.addAttribute("succMsg", "Password Sent to yuor email");
 		} else {
 			model.addAttribute("failMsg", "Invalid email");

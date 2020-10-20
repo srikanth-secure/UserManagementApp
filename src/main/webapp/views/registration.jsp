@@ -9,49 +9,102 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-	$(document).ready(function() {
-		$("#userEmail").blur(function() {
-			$("#errMsg").text("");
-			$.ajax({
-				type : "GET",
-				url : "uniqueMailCheck?email=" + $("#userEmail").val(),
-				success : function(data) {
-					if (data == "DUPLICATE") {
-						$("#errMsg").text("Duplicate Email");
-						$("#submitBtn").prop("disabled",true);
-					}else{
-						$("#submitBtn").prop("disabled",false);
-						}				}
-			});
-		});
+	$(document)
+			.ready(
+					function() {
+						$("#userEmail").blur(
+								function() {
+									$("#errMsg").text("");
+									$.ajax({
+										type : "GET",
+										url : "uniqueMailCheck?email="
+												+ $("#userEmail").val(),
+										success : function(data) {
+											if (data == "DUPLICATE") {
+												$("#errMsg").text(
+														"Duplicate Email");
+												$("#submitBtn").prop(
+														"disabled", true);
+											} else {
+												$("#submitBtn").prop(
+														"disabled", false);
+											}
+										}
+									});
+								});
 
-		$("#countryId").change(function(){
-			$('#stateId').find('option:not(:first)').remove();
-			$('#cityId').find('option:not(:first)').remove();
-			$.ajax({
-				type : "GET",
-				url : "countryChange?countryId="+$("#countryId").val(),
-				success : function(data) {
-					$.each(data, function(stateId, stateName) {
-			            $('#stateId').append($('<option>').text(stateName).attr('value', stateId));
-			        });
-				}
-			});
-		});
-		
-		$("#stateId").change(function(){
-			$('#cityId').find('option:not(:first)').remove();
-			$.ajax({
-				type : "GET",
-				url : "stateChange?stateId="+$("#stateId").val(),
-				success : function(data) {
-					$.each(data, function(cityId, cityName) {
-			            $('#cityId').append($('<option>').text(cityName).attr('value', cityId));
-			        });
-				}
-			});
-		});
-	});
+						$("#countryId")
+								.change(
+										function() {
+											$('#stateId').find(
+													'option:not(:first)')
+													.remove();
+											$('#cityId').find(
+													'option:not(:first)')
+													.remove();
+											$
+													.ajax({
+														type : "GET",
+														url : "countryChange?countryId="
+																+ $(
+																		"#countryId")
+																		.val(),
+														success : function(data) {
+															$
+																	.each(
+																			data,
+																			function(
+																					stateId,
+																					stateName) {
+																				$(
+																						'#stateId')
+																						.append(
+																								$(
+																										'<option>')
+																										.text(
+																												stateName)
+																										.attr(
+																												'value',
+																												stateId));
+																			});
+														}
+													});
+										});
+
+						$("#stateId")
+								.change(
+										function() {
+											$('#cityId').find(
+													'option:not(:first)')
+													.remove();
+											$
+													.ajax({
+														type : "GET",
+														url : "stateChange?stateId="
+																+ $("#stateId")
+																		.val(),
+														success : function(data) {
+															$
+																	.each(
+																			data,
+																			function(
+																					cityId,
+																					cityName) {
+																				$(
+																						'#cityId')
+																						.append(
+																								$(
+																										'<option>')
+																										.text(
+																												cityName)
+																										.attr(
+																												'value',
+																												cityId));
+																			});
+														}
+													});
+										});
+					});
 </script>
 </head>
 <body>
@@ -59,7 +112,8 @@
 	<div align="center">
 		<h3>Register Here</h3>
 
-		<form:form action="userRegistration" method="POST" modelAttribute="userAcc">
+		<form:form action="userRegistration" method="POST"
+			modelAttribute="userAcc">
 
 			<font color="red">${failMsg}</font>
 			<font color="green">${succMsg}</font>
@@ -74,9 +128,8 @@
 				</tr>
 				<tr>
 					<td>Email :</td>
-					<td><form:input path="userEmail" id="userEmail" />
-					<font color='red'><span id="errMsg"></span></font>
-					</td>
+					<td><form:input path="userEmail" id="userEmail" /> <font
+						color='red'><span id="errMsg"></span></font></td>
 				</tr>
 				<tr>
 					<td>Phone No :</td>
@@ -88,8 +141,8 @@
 				</tr>
 				<tr>
 					<td>Gender :</td>
-					<td><form:radiobutton path="gender" value="M" /> Male
-					<form:radiobutton path="gender" value="F" /> Female</td>
+					<td><form:radiobutton path="gender" value="M" /> Male <form:radiobutton
+							path="gender" value="F" /> Female</td>
 				</tr>
 				<tr>
 					<td>Select Country :</td>
@@ -112,10 +165,10 @@
 				</tr>
 				<tr>
 					<td><input type="reset" value="Reset" /></td>
-					<td><input type="submit" value="Submit" id="submitBtn"/></td>
+					<td><input type="submit" value="Submit" id="submitBtn" /></td>
 				</tr>
 			</table>
-
+			<a href="/">Already sign-in, goto sign-in page</a>
 		</form:form>
 	</div>
 

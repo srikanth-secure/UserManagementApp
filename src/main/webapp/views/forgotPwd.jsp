@@ -14,7 +14,8 @@
 		<h3>Recover Password Here</h3>
 
 		<font color="red">${failMsg}</font> <font color="green">${succMsg}</font>
-		<form action="forgotPwd">
+
+		<form action="forgotPwd" method="POST">
 			<table>
 				<tr>
 					<td>Email :</td>
@@ -23,10 +24,10 @@
 
 				<tr>
 					<td><input type="reset" value="Reset" /></td>
-					<td><input type="submit" value="Submit" id="unlock Account" /></td>
+					<td><input type="submit" value="Submit" /></td>
 				</tr>
 			</table>
-
+			<a href="/">Go home page to login</a>
 		</form>
 	</div>
 

@@ -135,23 +135,43 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getRegSuccMailBody(UserAccounts user) {
 
-		String fileName = "Unlock Mail Body Template.txt";
+		String fileName = "UNLOCK_MAIL_BODY.txt";
 		List<String> replacedLines = null;
 		String mailBody = null;
 		try {
 			Path path = Paths.get(fileName, "");
 			Stream<String> lines = Files.lines(path);
-			String replaceLines = user.getUserPwd()
-					+ "<a href=\'http://localhost:9090/unlockAcc?email=sri@yahoo.com\'>Click here to unlockhere";
-			/*
-			 * replacedLines = (List<String>) lines .map(line -> line .replace("{FNAME}",
-			 * user.getFirstName()) .replace("{LNAME}", user.getLastName())
-			 * .replace("{TEMP-PWD}", user.getUserPwd()) .replace("{EMAIL}",
-			 * user.getUserEmail()) .collect(Collectors.toList()) );
-			 */
+			// String replaceLines = user.getUserPwd()
+			// + "<a href=\'http://localhost:9090/unlockAcc?email=sri@yahoo.com\'>
+			// Click here to unlockhere";
 
-			// mailBody = String.join("", replacedLines);
-			mailBody = String.join("", replaceLines);
+			replacedLines = lines
+					.map(line -> line.replace("{FNAME}", user.getFirstName()).replace("{LNAME}", user.getLastName())
+							.replace("{TEMP-PWD}", user.getUserPwd()).replace("{EMAIL}", user.getUserEmail()))
+					.collect(Collectors.toList());
+
+			mailBody = String.join("", replacedLines);
+			// mailBody = String.join("", replaceLines);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mailBody;
+	}
+
+	@Override
+	public String getRecoverPwdEmailBody(UserAccounts userAccount) {
+		String fileName = "MAIL_BODY.txt";
+		List<String> replacedLines = null;
+		String mailBody = null;
+		try {
+			Path path = Paths.get(fileName, "");
+			Stream<String> lines = Files.lines(path);
+			replacedLines = lines
+					.map(line -> line.replace("{FNAME}", userAccount.getFirstName())
+							.replace("{LNAME}", userAccount.getLastName()).replace("{PWD}", userAccount.getUserPwd()))
+					.collect(Collectors.toList());
+
+			mailBody = String.join("", replacedLines);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -192,29 +212,6 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return "FAIL";
 		}
-	}
-
-	@Override
-	public String getRecoverPwdEmailBody(UserAccounts userAccount) {
-		String fileName = "Recover Password Mail Body Template.txt";
-		List<String> replacedLines = null;
-		String mailBody = null;
-		try {
-			Path path = Paths.get(fileName, "");
-			Stream<String> lines = Files.lines(path);
-			String replaceLines = userAccount.getUserPwd();
-			/*
-			 * replacedLines = (List<String>) lines .map(line -> line .replace("{FNAME}",
-			 * userAccount.getFirstName()) .replace("{LNAME}", userAccount.getLastName())
-			 * .replace("{PWD}", userAccount.getUserPwd()) .collect(Collectors.toList()) );
-			 */
-
-			// mailBody = String.join("", replacedLines);
-			mailBody = String.join("", replaceLines);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return mailBody;
 	}
 
 	@Override
