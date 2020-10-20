@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getRegSuccMailBody(UserAccounts user) {
 
-		String fileName = "Mail Body Template.txt";
+		String fileName = "Unlock Mail Body Template.txt";
 		List<String> replacedLines = null;
 		String mailBody = null;
 		try {
@@ -180,20 +180,49 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String recoverPassword(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		UserAccountEntity entity = userAccRepo.findByUserEmail(email);
+		if (entity != null) {
+			UserAccounts acc = new UserAccounts();
+			BeanUtils.copyProperties(entity, acc);
+			String body = getRecoverPwdEmailBody(acc);
+			String to = acc.getUserEmail();
+			String subject = "Password Recovery";
+			sendPwdToEmail(to, subject, body);
+			return "SUCCESS";
+		} else {
+			return "FAIL";
+		}
 	}
 
 	@Override
 	public String getRecoverPwdEmailBody(UserAccounts userAccount) {
-		// TODO Auto-generated method stub
-		return null;
+		String fileName = "Recover Password Mail Body Template.txt";
+		List<String> replacedLines = null;
+		String mailBody = null;
+		try {
+			Path path = Paths.get(fileName, "");
+			Stream<String> lines = Files.lines(path);
+			String replaceLines = userAccount.getUserPwd();
+			/*
+			 * replacedLines = (List<String>) lines .map(line -> line .replace("{FNAME}",
+			 * userAccount.getFirstName()) .replace("{LNAME}", userAccount.getLastName())
+			 * .replace("{PWD}", userAccount.getUserPwd()) .collect(Collectors.toList()) );
+			 */
+
+			// mailBody = String.join("", replacedLines);
+			mailBody = String.join("", replaceLines);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mailBody;
 	}
 
 	@Override
-	public String sendPwdToEmail(String email, String subject, String body) {
-		// TODO Auto-generated method stub
-		return null;
+	public String sendPwdToEmail(String to, String subject, String body) {
+		boolean sendEmail = emailUtils.sendEmail(to, subject, body);
+		if (sendEmail) {
+			return "Email sent";
+		}
+		return "Fail to send Email";
 	}
-
 }
