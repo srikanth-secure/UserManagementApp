@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.srikanth.constants.AppConstants;
 import com.srikanth.pojo.UserAccounts;
 import com.srikanth.service.UserService;
 
@@ -23,7 +24,7 @@ public class RegistrationController {
 	@ModelAttribute
 	public void loadFormData(Model model) {
 		UserAccounts userAccObj = new UserAccounts();
-		model.addAttribute("userAcc", userAccObj);
+		model.addAttribute(AppConstants.USER_ACC, userAccObj);
 		Map<Integer, String> countriesMap = userService.loadCountries();
 		model.addAttribute("countries", countriesMap);
 	}
@@ -36,7 +37,7 @@ public class RegistrationController {
 	@GetMapping("/uniqueMailCheck")
 	public @ResponseBody String isEmailUnique(@RequestParam("email") String email) {
 		// String response = "";
-		return userService.isUniqueEmail(email) ? "UNIQUE" : "DUPLICATE";
+		return userService.isUniqueEmail(email) ? AppConstants.UNIQUE : AppConstants.DUPLICATE;
 		/*
 		 * if (isUnique) { response = "UNIQUE"; } else { response = "DUPLICATE"; }
 		 * return response;
@@ -58,11 +59,11 @@ public class RegistrationController {
 		boolean isSaved = userService.saveUserAccount(userAcc);
 
 		if (isSaved) {
-			model.addAttribute("succMsg",
+			model.addAttribute(AppConstants.SUCC_MSG,
 					"Your Registration almost finished. Please check your email to unlock your account.");
 		} else {
-			model.addAttribute("failMsg", "Registration Failed");
+			model.addAttribute(AppConstants.FAIL_MSG, "Registration Failed");
 		}
-		return "registration";
+		return AppConstants.REGISTRATION_VIEW_NAME;
 	}
 }

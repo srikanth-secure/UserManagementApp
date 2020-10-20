@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.srikanth.constants.AppConstants;
 import com.srikanth.service.UserService;
 
 @Controller
@@ -23,7 +24,7 @@ public class ForgotPasswordController {
 	 */
 	@GetMapping("/forgotPwd")
 	public String loadForm() {
-		return "forgotPwd";
+		return AppConstants.FORGOT_PWD_VIEW_NAME;
 	}
 
 	/**
@@ -35,15 +36,15 @@ public class ForgotPasswordController {
 	 */
 	@PostMapping("/forgotPwd")
 	public String handleForgotPwdSubmtBtn(HttpServletRequest req, Model model) {
-		String email = req.getParameter("email");
+		String email = req.getParameter(AppConstants.EMAIL);
 		String status = userService.recoverPassword(email);
 		// System.out.pri ntln(email);
-		if (status.equals("SUCCESS")) {
-			model.addAttribute("succMsg", "Password Sent to yuor email");
+		if (status.equals(AppConstants.SUCCESS)) {
+			model.addAttribute(AppConstants.SUCC_MSG, AppConstants.PWD_SENT_TO_EMAIL);
 		} else {
-			model.addAttribute("failMsg", "Invalid email");
+			model.addAttribute(AppConstants.FAIL_MSG, AppConstants.INVALID_EMAIL);
 		}
 
-		return "forgotPwd";
+		return AppConstants.FORGOT_PWD_VIEW_NAME;
 	}
 }

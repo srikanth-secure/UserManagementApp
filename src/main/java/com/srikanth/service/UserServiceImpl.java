@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.srikanth.constants.AppConstants;
 import com.srikanth.entity.CitiesMasterEntity;
 import com.srikanth.entity.CountryMasterEntity;
 import com.srikanth.entity.StatesMasterEntity;
@@ -46,11 +47,11 @@ public class UserServiceImpl implements UserService {
 	public String loginCheck(String email, String pwd) {
 		UserAccountEntity userAccountEntity = userAccRepo.findByUserEmailAndUserPwd(email, pwd);
 		if (userAccountEntity == null) {
-			return "Invalid Details";
-		} else if (userAccountEntity.getAccStatus().equals("LOCKED")) {
+			return AppConstants.INVALID_DETAILS;
+		} else if (userAccountEntity.getAccStatus().equals(AppConstants.LOCKED)) {
 			return "Your account is locked. Please check your email and unlock it.";
 		} else {
-			return "VALID";
+			return AppConstants.VALID;
 		}
 	}
 
@@ -93,7 +94,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String generateTempPwd() {
 		// chose a Character random from this String
-		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
+		String AlphaNumericString = AppConstants.A2Z + AppConstants.NO_0_TO_9 + AppConstants.SMALL_A2Z;
 		// create StringBuffer size of AlphaNumericString
 		StringBuilder sb = new StringBuilder(6);
 		for (int i = 0; i < 6; i++) {
@@ -109,7 +110,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean saveUserAccount(UserAccounts userAccount) {
 
-		userAccount.setAccStatus("LOCKED");
+		userAccount.setAccStatus(AppConstants.LOCKED);
 
 		userAccount.setUserPwd(generateTempPwd());
 
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
 
 		if (savedEntity.getUserId() != null) {
 			String to = userAccount.getUserEmail();
-			String subject = "Registration Successfull";
+			String subject = AppConstants.REG_SUCCESS;
 			String body = getRegSuccMailBody(userAccount);
 			sendRegSuccEmail(to, subject, body);
 			return true;
@@ -135,7 +136,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getRegSuccMailBody(UserAccounts user) {
 
-		String fileName = "UNLOCK_MAIL_BODY.txt";
+		String fileName = AppConstants.REGISTRATION_MAIL_BODY_FILE;
 		List<String> replacedLines = null;
 		String mailBody = null;
 		try {
@@ -150,7 +151,7 @@ public class UserServiceImpl implements UserService {
 							.replace("{TEMP-PWD}", user.getUserPwd()).replace("{EMAIL}", user.getUserEmail()))
 					.collect(Collectors.toList());
 
-			mailBody = String.join("", replacedLines);
+			mailBody = String.join(AppConstants.EMPTY_STR, replacedLines);
 			// mailBody = String.join("", replaceLines);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,18 +161,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getRecoverPwdEmailBody(UserAccounts userAccount) {
-		String fileName = "MAIL_BODY.txt";
+		String fileName = AppConstants.RECOVERY_PWD_MAIL_BODY_FILE;
 		List<String> replacedLines = null;
 		String mailBody = null;
 		try {
-			Path path = Paths.get(fileName, "");
+			Path path = Paths.get(fileName, AppConstants.EMPTY_STR);
 			Stream<String> lines = Files.lines(path);
 			replacedLines = lines
 					.map(line -> line.replace("{FNAME}", userAccount.getFirstName())
 							.replace("{LNAME}", userAccount.getLastName()).replace("{PWD}", userAccount.getUserPwd()))
 					.collect(Collectors.toList());
 
-			mailBody = String.join("", replacedLines);
+			mailBody = String.join(AppConstants.EMPTY_STR, replacedLines);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -192,7 +193,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean unlockAccount(String email, String password) {
 		UserAccountEntity entity = userAccRepo.findByUserEmail(email);
-		entity.setAccStatus("UNLOCKED");
+		entity.setAccStatus(AppConstants.UNLOCKED);
 		entity.setUserPwd(password);
 		UserAccountEntity savedEntity = userAccRepo.save(entity);
 		return savedEntity.getUserId() != null ? true : false;
@@ -206,11 +207,11 @@ public class UserServiceImpl implements UserService {
 			BeanUtils.copyProperties(entity, acc);
 			String body = getRecoverPwdEmailBody(acc);
 			String to = acc.getUserEmail();
-			String subject = "Password Recovery";
+			String subject = AppConstants.PAZZWORD_RECOVERY;
 			sendPwdToEmail(to, subject, body);
-			return "SUCCESS";
+			return AppConstants.SUCCESS;
 		} else {
-			return "FAIL";
+			return AppConstants.FAIL;
 		}
 	}
 
@@ -218,8 +219,8 @@ public class UserServiceImpl implements UserService {
 	public String sendPwdToEmail(String to, String subject, String body) {
 		boolean sendEmail = emailUtils.sendEmail(to, subject, body);
 		if (sendEmail) {
-			return "Email sent";
+			return AppConstants.EMAIL_SENT;
 		}
-		return "Fail to send Email";
+		return AppConstants.EMAIL_SENT_FAIL;
 	}
 }

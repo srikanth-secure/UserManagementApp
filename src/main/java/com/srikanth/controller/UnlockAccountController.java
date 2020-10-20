@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.srikanth.constants.AppConstants;
 import com.srikanth.pojo.UnlockAccount;
 import com.srikanth.service.UserService;
 
@@ -26,12 +27,12 @@ public class UnlockAccountController {
 	 */
 	@GetMapping("/unlockAcc")
 
-	public String loadUnlockAccForm(@RequestParam("email") String email, Model model) {
+	public String loadUnlockAccForm(@RequestParam(AppConstants.EMAIL) String email, Model model) {
 
 		UnlockAccount account = new UnlockAccount();
 		account.setEmail(email);
-		model.addAttribute("userAcc", account);
-		return "unlockAcc";
+		model.addAttribute(AppConstants.USER_ACC, account);
+		return AppConstants.UNLOCK_ACC_VIEW_NAME;
 	}
 
 	/**
@@ -42,14 +43,15 @@ public class UnlockAccountController {
 	 * @return String
 	 */
 	@PostMapping("/unlockAccount")
-	public String handleSubmitBtn(@ModelAttribute("userAcc") UnlockAccount unlockAcc, Model model) {
+	public String handleSubmitBtn(@ModelAttribute(AppConstants.USER_ACC) UnlockAccount unlockAcc, Model model) {
 		boolean isValid = userService.isTempPwdValid(unlockAcc.getEmail(), unlockAcc.getTempPwd());
 		if (isValid) {
 			userService.unlockAccount(unlockAcc.getEmail(), unlockAcc.getNewPwd());
-			model.addAttribute("succMsg", "Your Account Unlocked.<a href=\"index\">Click here to login</a>");
+			model.addAttribute(AppConstants.SUCC_MSG,
+					"Your Account Unlocked.<a href=\"index\">Click here to login</a>");
 		} else {
-			model.addAttribute("failMsg", "Enter Correct Temp Password");
+			model.addAttribute(AppConstants.FAIL_MSG, "Enter Correct Temp Password");
 		}
-		return "unlockAcc";
+		return AppConstants.UNLOCK_ACC_VIEW_NAME;
 	}
 }

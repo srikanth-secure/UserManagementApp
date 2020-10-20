@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.srikanth.constants.AppConstants;
 import com.srikanth.service.UserService;
 
 @Controller
@@ -22,7 +23,7 @@ public class LoginController {
 	 */
 	@GetMapping(value = { "/", "index" })
 	public String index() {
-		return "index";
+		return AppConstants.INDEX_VIEW_NAME;
 	}
 
 	/**
@@ -34,15 +35,15 @@ public class LoginController {
 	 */
 	@PostMapping("/signin")
 	public String handleSignInBtn(HttpServletRequest req, Model model) {
-		String viewName = "";
-		String email = req.getParameter("email");
-		String password = req.getParameter("pwd");
+		String viewName = AppConstants.EMPTY_STR;
+		String email = req.getParameter(AppConstants.EMAIL);
+		String password = req.getParameter(AppConstants.PAZZWORD);
 		String loginCheck = userService.loginCheck(email, password);
-		if (loginCheck.equals("VALID")) {
-			viewName = "dashboard";
+		if (loginCheck.equals(AppConstants.VALID)) {
+			viewName = AppConstants.DASHBOARD_VIEW_NAME;
 		} else {
-			viewName = "index";
-			model.addAttribute("failMsg", loginCheck);
+			viewName = AppConstants.INDEX_VIEW_NAME;
+			model.addAttribute(AppConstants.FAIL_MSG, loginCheck);
 		}
 		return viewName;
 	}
