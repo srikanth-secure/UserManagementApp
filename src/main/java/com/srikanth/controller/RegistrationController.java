@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.srikanth.constants.AppConstants;
 import com.srikanth.pojo.UserAccounts;
+import com.srikanth.props.AppProperties;
 import com.srikanth.service.UserService;
 
 @Controller
@@ -21,17 +22,20 @@ public class RegistrationController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private AppProperties appProps;
+
 	@ModelAttribute
 	public void loadFormData(Model model) {
 		UserAccounts userAccObj = new UserAccounts();
 		model.addAttribute(AppConstants.USER_ACC, userAccObj);
 		Map<Integer, String> countriesMap = userService.loadCountries();
-		model.addAttribute("countries", countriesMap);
+		model.addAttribute(AppConstants.COUNTRIES, countriesMap);
 	}
 
 	@GetMapping("/register")
 	public String loadRegForm(Model model) {
-		return "registration";
+		return AppConstants.REGISTRATION_VIEW_NAME;
 	}
 
 	@GetMapping("/uniqueMailCheck")
@@ -59,10 +63,11 @@ public class RegistrationController {
 		boolean isSaved = userService.saveUserAccount(userAcc);
 
 		if (isSaved) {
-			model.addAttribute(AppConstants.SUCC_MSG,
-					"Your Registration almost finished. Please check your email to unlock your account.");
+			String succMsg = appProps.getMessages().get(AppConstants.REG_SUCCESS);
+			model.addAttribute(AppConstants.SUCC_MSG, succMsg);
 		} else {
-			model.addAttribute(AppConstants.FAIL_MSG, "Registration Failed");
+			String failMsg = appProps.getMessages().get(AppConstants.REG_FAIL);
+			model.addAttribute(AppConstants.FAIL_MSG, failMsg);
 		}
 		return AppConstants.REGISTRATION_VIEW_NAME;
 	}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.srikanth.constants.AppConstants;
+import com.srikanth.props.AppProperties;
 import com.srikanth.service.UserService;
 
 @Controller
@@ -16,6 +17,9 @@ public class ForgotPasswordController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AppProperties appProperties;
 
 	/**
 	 * This method is used to load forgot password form
@@ -40,9 +44,11 @@ public class ForgotPasswordController {
 		String status = userService.recoverPassword(email);
 		// System.out.pri ntln(email);
 		if (status.equals(AppConstants.SUCCESS)) {
-			model.addAttribute(AppConstants.SUCC_MSG, AppConstants.PWD_SENT_TO_EMAIL);
+			String succMsg = appProperties.getMessages().get(AppConstants.RECOVER_PWD_SUCC);
+			model.addAttribute(AppConstants.SUCC_MSG, succMsg);
 		} else {
-			model.addAttribute(AppConstants.FAIL_MSG, AppConstants.INVALID_EMAIL);
+			String failMsg = appProperties.getMessages().get(AppConstants.INVALID_EMAIL);
+			model.addAttribute(AppConstants.FAIL_MSG, failMsg);
 		}
 
 		return AppConstants.FORGOT_PWD_VIEW_NAME;

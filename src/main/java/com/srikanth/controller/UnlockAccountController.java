@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.srikanth.constants.AppConstants;
 import com.srikanth.pojo.UnlockAccount;
+import com.srikanth.props.AppProperties;
 import com.srikanth.service.UserService;
 
 @Controller
@@ -17,6 +18,9 @@ public class UnlockAccountController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AppProperties appProps;
 
 	/**
 	 * This method is used load unlock-account form
@@ -47,10 +51,11 @@ public class UnlockAccountController {
 		boolean isValid = userService.isTempPwdValid(unlockAcc.getEmail(), unlockAcc.getTempPwd());
 		if (isValid) {
 			userService.unlockAccount(unlockAcc.getEmail(), unlockAcc.getNewPwd());
-			model.addAttribute(AppConstants.SUCC_MSG,
-					"Your Account Unlocked.<a href=\"index\">Click here to login</a>");
+			String succMsg = appProps.getMessages().get(AppConstants.UNLOCK_ACC_SUCC);
+			model.addAttribute(AppConstants.SUCC_MSG, succMsg);
 		} else {
-			model.addAttribute(AppConstants.FAIL_MSG, "Enter Correct Temp Password");
+			String failMsg = appProps.getMessages().get(AppConstants.INVALID_TEMP_PWD);
+			model.addAttribute(AppConstants.FAIL_MSG, failMsg);
 		}
 		return AppConstants.UNLOCK_ACC_VIEW_NAME;
 	}

@@ -16,7 +16,8 @@ public class AppConstants {
 	public static final String USER_ACC = "userAcc";
 	public static final String SUCCESS = "SUCCESS";
 	public static final String FAIL = "FAIL";
-	public static final String REG_SUCCESS = "Registration Success";
+	public static final String REG_SUCCESS = "regSuccMsg";
+	public static final String REG_FAIL = "regFail";
 	public static final String UNIQUE = "UNIQUE";
 	public static final String DUPLICATE = "DUPLICATE";
 	public static final String LOCKED = "LOCKED";
@@ -28,13 +29,16 @@ public class AppConstants {
 	public static final String INVALID_DETAILS = "Invalid Details";
 	public static final String EMAIL_SENT = "Email Sent";
 	public static final String EMAIL_SENT_FAIL = "Email Sent Failed.";
-	public static final String PWD_SENT_TO_EMAIL = "PAssword Sent to Email.";
-	public static final String INVALID_EMAIL = "Invalid email";
-
+	public static final String RECOVER_PWD_SUCC = "recoverPwdSucc";
+	public static final String INVALID_EMAIL = "invalidEmail";
+	public static final String UNLOCK_ACC_SUCC = "unlockAccSucc";
+	public static final String INVALID_TEMP_PWD="invalidTempPwd";
 	public static final String A2Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static final String NO_0_TO_9 = "0123456789";
 	public static final String SMALL_A2Z = "abcdefghijklmnopqrstuvxyz";
+	public static final String ACC_LOCK_MSG="accLockMsg";
 
 	public static final String REGISTRATION_MAIL_BODY_FILE = "UNLOCK_MAIL_BODY.txt";
 	public static final String RECOVERY_PWD_MAIL_BODY_FILE = "MAIL_BODY.txt";
+	public static final String COUNTRIES = "countries";
 }

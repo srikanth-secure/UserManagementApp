@@ -19,6 +19,7 @@ import com.srikanth.entity.CountryMasterEntity;
 import com.srikanth.entity.StatesMasterEntity;
 import com.srikanth.entity.UserAccountEntity;
 import com.srikanth.pojo.UserAccounts;
+import com.srikanth.props.AppProperties;
 import com.srikanth.repo.CitiesMasterRepository;
 import com.srikanth.repo.CountryMasterRepository;
 import com.srikanth.repo.StatesMasterRepository;
@@ -43,13 +44,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private EmailUtils emailUtils;
 
+	@Autowired
+	private AppProperties appProps;
+
 	@Override
 	public String loginCheck(String email, String pwd) {
 		UserAccountEntity userAccountEntity = userAccRepo.findByUserEmailAndUserPwd(email, pwd);
 		if (userAccountEntity == null) {
 			return AppConstants.INVALID_DETAILS;
 		} else if (userAccountEntity.getAccStatus().equals(AppConstants.LOCKED)) {
-			return "Your account is locked. Please check your email and unlock it.";
+			String accLockMsg = appProps.getMessages().get(AppConstants.ACC_LOCK_MSG);
+			return accLockMsg;
 		} else {
 			return AppConstants.VALID;
 		}

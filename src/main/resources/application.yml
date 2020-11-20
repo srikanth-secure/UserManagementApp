@@ -21,10 +21,21 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: srikanth.secure@gmail.com
-    password: <YOUR PWD>
+    password: <PWD>
     properties:
       mail:
         smtp:
           starttls:
             enable: true
           auth: true
+          
+app:
+  Messages:
+     regSuccMsg: Your Registration almost completed. Please check your email to unlock your account.
+     regFail: Registration Failed.
+     recoverPwdSucc: Password sent to your email
+     invalidEmail: Please enter valid email.
+     unlockAccSucc: Your Account Unlocked.<a href=\>Click here to login</a>
+     invalidTempPwd: Enter Correct Temp Password
+     accLockMsg: Your account is locked. Please check your email and unlock it.
+  
